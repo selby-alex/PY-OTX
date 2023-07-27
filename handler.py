@@ -1,20 +1,14 @@
 import requests
 import os
 from pprint import pprint
-from dotenv import find_dotenv, load_dotenv
+# from dotenv import find_dotenv, load_dotenv
 
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 
 def get_all_indicators(api_key, domain, page=1, all_indicators=[]):
     url = f"https://otx.alienvault.com/api/v1/indicators/domain/{domain}/url_list?limit=50&page={page}"
-    params = {
-        'limit': 50,  # Set the number of results per page (maximum is 50)
-    }
-    headers = {
-        'X-OTX-API-KEY': api_key,
-    }
 
-    response = requests.get(url, params=params, headers=headers)
+    response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
 
@@ -33,12 +27,9 @@ def get_all_indicators(api_key, domain, page=1, all_indicators=[]):
 
     return all_indicators
 
+all_indicators = get_all_indicators(api_key=None, domain="XXXXXX")
 
-
-api_key = os.environ.get("API_KEY")
-all_pulse_indicators = get_all_indicators(api_key=api_key, domain="google.com")
-
-for x in all_pulse_indicators:
+for x in all_indicators:
     pprint(x)
 
 
