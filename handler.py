@@ -12,13 +12,13 @@ def get_all_indicators(api_key, domain, page=1, all_indicators=[]):
     if response.status_code == 200:
         data = response.json()
 
-        paged = data.get("has_next")
+        has_next = data.get("has_next")
         page_number = data.get("page_num")
         url_list = data.get("url_list")
         all_indicators.extend(url_list)
         
 
-        if paged:
+        if has_next:
             page_number += 1
             get_all_indicators(api_key, domain, page_number, all_indicators)
     else:
